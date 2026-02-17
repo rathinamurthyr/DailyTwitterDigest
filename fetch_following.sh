@@ -73,7 +73,7 @@ print(urllib.parse.quote(json.dumps(v)))
     -H "authorization: Bearer ${BEARER}" \
     -H 'content-type: application/json' \
     -H "cookie: auth_token=${AUTH_TOKEN}; ct0=${CT0}" \
-    -H "referer: https://x.com/rathinamurthy/following" \
+    -H "referer: https://x.com/following" \
     -H "user-agent: ${UA}" \
     -H "x-csrf-token: ${CT0}" \
     -H 'x-twitter-active-user: yes' \

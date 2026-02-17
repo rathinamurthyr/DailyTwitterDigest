@@ -11,7 +11,8 @@ This tool is designed to work as a [Claude Code](https://docs.anthropic.com/en/d
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/rathinamurthyr/DailyTwitterDigest.git ~/Documents/RathinaProjects/DailyTwitterSummaryTool
+git clone https://github.com/rathinamurthyr/DailyTwitterDigest.git
+cd DailyTwitterDigest
 pip install certifi
 ```
 
@@ -19,7 +20,7 @@ pip install certifi
 
 ```bash
 mkdir -p ~/.claude/skills/daily-twitter/
-cp ~/Documents/RathinaProjects/DailyTwitterSummaryTool/SKILL.md ~/.claude/skills/daily-twitter/SKILL.md
+cp SKILL.md ~/.claude/skills/daily-twitter/SKILL.md
 ```
 
 ### 3. One-time setup
@@ -45,7 +46,7 @@ That's it. Claude will run the digest, open the HTML in your browser, and presen
 The tool works with any AI coding agent that supports shell execution. Point it at the script:
 
 ```bash
-cd ~/Documents/RathinaProjects/DailyTwitterSummaryTool && python3 daily_digest.py
+python3 daily_digest.py
 ```
 
 The generated digest files will be in the `digests/` folder.
@@ -55,7 +56,6 @@ The generated digest files will be in the `digests/` folder.
 You can also run the script directly without Claude Code:
 
 ```bash
-cd ~/Documents/RathinaProjects/DailyTwitterSummaryTool
 python3 daily_digest.py
 ```
 
