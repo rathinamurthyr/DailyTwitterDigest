@@ -13,6 +13,8 @@ import urllib.parse
 import urllib.request
 import ssl
 import certifi
+import webbrowser
+import html as html_mod
 from datetime import datetime, timedelta, timezone
 from getpass import getpass
 from pathlib import Path
@@ -494,6 +496,453 @@ def generate_digest(categorized_tweets, min_likes, date_str):
     return "\n".join(lines)
 
 
+def generate_html_digest(categorized_tweets, min_likes, date_str):
+    """Generate a self-contained HTML digest with embedded CSS"""
+    # Build category order (same as markdown)
+    category_order = [
+        "AI / ML & Research",
+        "Tech CEOs & Founders",
+        "VC & Investors",
+        "India Startup Ecosystem",
+        "Product & Growth",
+        "Creators & Writers",
+        "Design & UX",
+        "Crypto & Web3",
+        "SaaS & Enterprise",
+        "Media & News",
+        "Politics & Public Figures",
+        "Entertainment & Sports",
+        "Other",
+    ]
+    active_categories = []
+    for cat in category_order:
+        if cat in categorized_tweets and categorized_tweets[cat]:
+            active_categories.append(cat)
+    for cat in categorized_tweets:
+        if cat not in active_categories and categorized_tweets[cat]:
+            active_categories.append(cat)
+
+    total = sum(len(tweets) for tweets in categorized_tweets.values())
+
+    def esc(text):
+        return html_mod.escape(text)
+
+    def fmt_number(n):
+        if n >= 1_000_000:
+            return f"{n / 1_000_000:.1f}M"
+        if n >= 1_000:
+            return f"{n / 1_000:.1f}K"
+        return str(n)
+
+    def cat_id(cat):
+        return cat.lower().replace(" ", "-").replace("/", "").replace("&", "and")
+
+    # Build nav items
+    nav_html = ""
+    for cat in active_categories:
+        count = len(categorized_tweets[cat])
+        cid = cat_id(cat)
+        nav_html += f'<a href="#{cid}" class="nav-item" data-section="{cid}">{esc(cat)}<span class="nav-count">{count}</span></a>\n'
+
+    # Build tweet cards
+    sections_html = ""
+    for cat in active_categories:
+        cid = cat_id(cat)
+        tweets = categorized_tweets[cat]
+        cards_html = ""
+        for t in tweets:
+            text = t["text"].strip()
+            # Preserve newlines as <br> in HTML
+            text_html = esc(text).replace("\n", "<br>")
+            initials = esc(t["display_name"][:2].upper()) if t["display_name"] else "?"
+            cards_html += f'''<div class="tweet-card">
+  <div class="tweet-header">
+    <div class="avatar">{initials}</div>
+    <div class="tweet-author">
+      <span class="display-name">{esc(t["display_name"])}</span>
+      <span class="handle">@{esc(t["screen_name"])}</span>
+    </div>
+  </div>
+  <div class="tweet-text">{text_html}</div>
+  <div class="tweet-stats">
+    <span class="stat" title="Likes"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>{fmt_number(t["likes"])}</span>
+    <span class="stat" title="Retweets"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>{fmt_number(t["retweets"])}</span>
+    <span class="stat" title="Views"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>{fmt_number(t["views"])}</span>
+    <a href="{esc(t["url"])}" target="_blank" rel="noopener" class="view-link">View Tweet &rarr;</a>
+  </div>
+</div>
+'''
+        sections_html += f'''<section id="{cid}" class="category-section">
+  <h2 class="category-title">{esc(cat)} <span class="category-count">{len(tweets)}</span></h2>
+  {cards_html}
+</section>
+'''
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Digest - {esc(date_str)}</title>
+<style>
+:root {{
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-card: #1c2128;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --likes: #f472b6;
+  --retweets: #34d399;
+  --views: #60a5fa;
+  --nav-bg: #161b22;
+  --nav-active: #1f6feb33;
+  --stat-bg: #ffffff08;
+}}
+html.light {{
+  --bg: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-card: #ffffff;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --text-secondary: #656d76;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --likes: #db2777;
+  --retweets: #059669;
+  --views: #2563eb;
+  --nav-bg: #f6f8fa;
+  --nav-active: #0969da1a;
+  --stat-bg: #00000008;
+}}
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+body {{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}}
+.layout {{
+  display: flex;
+  min-height: 100vh;
+}}
+/* Sidebar */
+.sidebar {{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--nav-bg);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  z-index: 100;
+}}
+.sidebar-header {{
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}}
+.sidebar-header h1 {{
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}}
+.sidebar-header .subtitle {{
+  font-size: 13px;
+  color: var(--text-secondary);
+}}
+.nav-item {{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}}
+.nav-item:hover {{
+  color: var(--text);
+  background: var(--nav-active);
+}}
+.nav-item.active {{
+  color: var(--accent);
+  background: var(--nav-active);
+  border-left-color: var(--accent);
+}}
+.nav-count {{
+  background: var(--stat-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 500;
+}}
+.theme-toggle {{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 10px;
+  background: var(--stat-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  transition: all 0.15s;
+}}
+.theme-toggle:hover {{
+  color: var(--text);
+  border-color: var(--accent);
+}}
+/* Main content */
+.main {{
+  margin-left: 280px;
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 900px;
+}}
+/* Welcome header */
+.welcome {{
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}}
+.welcome-greeting {{
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}}
+.welcome-title {{
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}}
+.welcome-title .highlight {{
+  background: linear-gradient(135deg, var(--accent), #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}}
+.welcome-meta {{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  flex-wrap: wrap;
+}}
+.welcome-meta .dot {{
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  opacity: 0.5;
+}}
+/* Category sections */
+.category-section {{
+  margin-bottom: 40px;
+}}
+.category-title {{
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}}
+.category-count {{
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--stat-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2px 10px;
+}}
+/* Tweet cards */
+.tweet-card {{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+}}
+.tweet-card:hover {{
+  border-color: var(--accent);
+}}
+.tweet-header {{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}}
+.avatar {{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #a855f7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}}
+.tweet-author {{
+  display: flex;
+  flex-direction: column;
+}}
+.display-name {{
+  font-weight: 600;
+  font-size: 15px;
+}}
+.handle {{
+  color: var(--text-secondary);
+  font-size: 13px;
+}}
+.tweet-text {{
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  word-wrap: break-word;
+}}
+.tweet-stats {{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}}
+.stat {{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}}
+.stat:nth-child(1) {{ color: var(--likes); }}
+.stat:nth-child(2) {{ color: var(--retweets); }}
+.stat:nth-child(3) {{ color: var(--views); }}
+.stat svg {{ opacity: 0.85; }}
+.view-link {{
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}}
+.view-link:hover {{
+  color: var(--accent-hover);
+  text-decoration: underline;
+}}
+/* Mobile menu */
+.mobile-menu-btn {{
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 200;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 18px;
+}}
+/* Responsive */
+@media (max-width: 768px) {{
+  .mobile-menu-btn {{ display: block; }}
+  .sidebar {{
+    transform: translateX(-100%);
+    transition: transform 0.25s;
+  }}
+  .sidebar.open {{ transform: translateX(0); }}
+  .main {{
+    margin-left: 0;
+    padding: 24px 16px;
+    padding-top: 60px;
+  }}
+  .summary {{ flex-direction: column; }}
+  .summary-card {{ min-width: auto; }}
+}}
+</style>
+</head>
+<body>
+<button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">&equiv; Menu</button>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <h1>Daily Digest</h1>
+      <div class="subtitle">{esc(date_str)} &middot; {min_likes}+ likes</div>
+    </div>
+    {nav_html}
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Light/Dark</button>
+  </nav>
+  <main class="main">
+    <div class="welcome">
+      <div class="welcome-greeting">Good to see you</div>
+      <h1 class="welcome-title">Welcome to your <span class="highlight">Daily X Digest</span></h1>
+      <div class="welcome-meta">
+        <span>{esc(date_str)}</span>
+        <span class="dot"></span>
+        <span>{total} tweets</span>
+        <span class="dot"></span>
+        <span>{len(active_categories)} categories</span>
+        <span class="dot"></span>
+        <span>{min_likes}+ likes</span>
+      </div>
+    </div>
+    {sections_html}
+  </main>
+</div>
+<script>
+// Theme toggle
+function toggleTheme() {{
+  document.documentElement.classList.toggle("light");
+  localStorage.setItem("theme", document.documentElement.classList.contains("light") ? "light" : "dark");
+}}
+(function() {{
+  if (localStorage.getItem("theme") === "light") document.documentElement.classList.add("light");
+}})();
+
+// Active nav highlight on scroll
+const sections = document.querySelectorAll(".category-section");
+const navItems = document.querySelectorAll(".nav-item");
+const observer = new IntersectionObserver(entries => {{
+  entries.forEach(entry => {{
+    if (entry.isIntersecting) {{
+      navItems.forEach(n => n.classList.remove("active"));
+      const active = document.querySelector('.nav-item[data-section="' + entry.target.id + '"]');
+      if (active) active.classList.add("active");
+    }}
+  }});
+}}, {{ rootMargin: "-20% 0px -70% 0px" }});
+sections.forEach(s => observer.observe(s));
+
+// Close mobile nav on link click
+navItems.forEach(n => n.addEventListener("click", () => {{
+  document.querySelector(".sidebar").classList.remove("open");
+}}));
+</script>
+</body>
+</html>'''
+
+
 def main():
     print("=" * 50)
     print("  DAILY TWITTER DIGEST GENERATOR")
@@ -546,16 +995,25 @@ def main():
     # Generate digest
     date_str = datetime.now().strftime("%Y-%m-%d")
     digest = generate_digest(categorized, min_likes, date_str)
+    html_digest = generate_html_digest(categorized, min_likes, date_str)
 
     # Save
     DIGESTS_DIR.mkdir(exist_ok=True)
-    output_file = DIGESTS_DIR / f"{date_str}_digest.md"
-    output_file.write_text(digest)
+    md_file = DIGESTS_DIR / f"{date_str}_digest.md"
+    html_file = DIGESTS_DIR / f"{date_str}_digest.html"
+    md_file.write_text(digest)
+    html_file.write_text(html_digest)
+
+    # Open HTML in browser
+    webbrowser.open(html_file.as_uri())
 
     print(f"\n{'=' * 50}")
-    print(f"  DIGEST SAVED: {output_file}")
+    print(f"  DIGEST SAVED:")
+    print(f"    Markdown: {md_file}")
+    print(f"    HTML:     {html_file}")
     print(f"  Total tweets: {len(filtered)}")
     print(f"  Categories: {len(categorized)}")
+    print(f"  Opened in browser!")
     print(f"{'=' * 50}")
 
 
