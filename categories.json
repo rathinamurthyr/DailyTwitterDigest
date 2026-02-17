@@ -1,0 +1,139 @@
+{
+  "AI / ML & Research": [
+    "karpathy", "AndrewYNg", "sama", "OpenAI", "AnthropicAI", "DrJimFan",
+    "ilyasut", "demishassabis", "GoogleDeepMind", "xai", "EpochAIResearch",
+    "soumithchintala", "mustafasuleyman", "EurekaLabsAI", "alexalbert__",
+    "Alibaba_Qwen", "emollick", "drfeifei", "gdb", "billpeeb", "_tim_brooks",
+    "ScottWu46", "aelluswamy", "ClementDelangue", "Krutrim", "JeffDean",
+    "alexandr_wang", "chiefaioffice", "LinusEkenstam", "AravSrinivas",
+    "danielgross", "natfriedman", "Suhail", "LangChain", "GoogleAIStudio",
+    "chatgpt21", "bcherny", "aiDotEngineer", "krandiash", "zhengyaojiang",
+    "NirantK", "paraschopra", "EricTopol", "deedydas", "dwarkesh_sp"
+  ],
+  "Tech CEOs & Founders": [
+    "elonmusk", "satyanadella", "sundarpichai", "tim_cook", "bchesky",
+    "rauchg", "tobi", "JeffBezos", "ashtom", "BrianNorgard", "jasonfried",
+    "dhh", "alexisohanian", "photomatt", "biz", "eldsjal", "drewhouston",
+    "evanspiegel", "brian_armstrong", "patrickc", "collision", "mikeyk",
+    "zoink", "parkerconrad", "stewart", "Benioff", "ajassy", "Werner",
+    "travisk", "marissamayer", "ericschmidt", "levie", "svembu",
+    "mrgirish", "t_xu", "fidjissimo", "eoghan", "mojombo", "amasad",
+    "jgebbia", "andrewmason", "awilkinson", "deepigoyal", "riteshagar",
+    "bhash", "vijayshekhar", "kunalb11", "_sachinbansal", "binnybansal",
+    "bhavintu", "NandanNilekani", "bryan_johnson", "nikitabier",
+    "reedhastings", "jack", "SusanWojcicki", "richardbranson",
+    "Nithin0dha", "gauravmunjal", "warikoo", "sureshsambandam",
+    "peyushbansal", "harshamjty", "vhmth", "zachperret"
+  ],
+  "VC & Investors": [
+    "naval", "pmarca", "a16z", "sequoia", "balajis", "chamath", "paulg",
+    "ycombinator", "fredwilson", "rabois", "bgurley", "vkhosla",
+    "DavidSacks", "jesslivingston", "joshk", "eladgil", "bhorowitz",
+    "reidhoffman", "GreylockVC", "kleinerperkins", "firstround",
+    "HarrySteb", "wolfejosh", "venturetwins", "shaunmmaguire",
+    "Alfred_Lin", "bsomaia", "LightspeedIndia", "anandlunia", "skirani",
+    "_AnandDaniel", "VaniKola", "BlumeVentures", "notablecap", "Accel",
+    "AccelIndia", "peakxvpartners", "Stellaris_VP", "NexusVP",
+    "SaamaCapital", "HelionVC", "ChirataeVC", "Kalaari", "tarun_davda",
+    "avnish", "500GlobalVC", "GVteam", "villageglobal", "gsvventures",
+    "leefixel", "hanstung", "RonConway", "johndoerr", "TimDraper",
+    "anuhariharan", "m2jr", "sarahtavel", "conniechan", "omooretweets",
+    "KTmBoyle", "lachygroom", "JoshuaKushner", "kevinhartz", "jonoringer",
+    "immad", "aileenlee", "mercebent", "deborahquazzo", "nbt", "edsim",
+    "lpolovets", "hunterwalk", "andrewchen", "annimaniac", "davemorin",
+    "cory", "msuster", "bfeld", "jmj", "HarrySteb", "eriktorenberg",
+    "bfeld", "Jason", "RajanAnandan", "sjs_day1", "prashanthp",
+    "shaileshlakhani", "sajithpai", "dkhare", "jaltma", "jeff",
+    "samidhas", "nolimits", "snowmaker", "yurimilner", "BKartRed",
+    "Abhay__Pandey", "prayanks", "alokgoyal1971", "rchowdhri",
+    "davemcclure", "garrytan", "daltonc", "mwseibel", "KatManalac",
+    "gralston", "mukularora"
+  ],
+  "India Startup Ecosystem": [
+    "nikhilkamathcio", "deepakabbot", "SinglaAnirudh", "rsanghvi",
+    "albinder", "foodpharmer2", "_sameernigam", "harshilmathur",
+    "rohitkbansal", "NaveenTewari", "1kunalbahl", "amodm",
+    "amnigos", "BipinSingh", "caesars", "pallavn", "ponnappa",
+    "amrishrau", "sachingupta006", "gaganbiyani", "ashishkashyap",
+    "rahulchari9", "anilgoteti", "ankitnagori27", "punitsoni",
+    "abhirajbhal", "apoorva_mehta", "jyotibansalsf", "amitabhk87",
+    "dilipasbe", "vivekanandahr", "ankitkr0", "barnwalSanjeev",
+    "harimenon_bb", "Akshay001", "rajanbajaj_", "sbikh", "lkeshre",
+    "a85", "getpostman", "RishiV", "nipunmehra", "MohapatraHemant",
+    "viditaatrey", "rvivek", "miten", "avinashraghava", "saasboomi",
+    "upekkhaBe", "cbkrish", "somani_utsav", "harish_io", "prukalpa",
+    "harshjain85", "ashishdave", "manishm", "aviralbhat",
+    "vaibhavbetter", "surojit", "ANarayanan24", "rarjunpillai",
+    "atomicworkhq", "Ema_Unlimited", "UltrahumanHQ", "atherenergy",
+    "tarunsmehta", "oyorooms", "PhonePe", "Flipkart", "amazonIN",
+    "FlipkartStories", "FreshworksInc", "chargebee", "Zoho",
+    "nasscom", "nasscomstartups", "startupindia", "Inc42",
+    "YourStoryCo", "TechCircleIndia", "vccircle", "entrackr",
+    "kiranshaw", "ganeshk03", "rodinhood", "TheKenWeb"
+  ],
+  "Product & Growth": [
+    "shreyas", "lennysan", "gokulr", "sachinrekhi", "nurijanian",
+    "PawelHuryn", "petergyang", "aakashgupta", "manikgupta",
+    "scottbelsky", "abnux", "reinpk", "calvinfo", "akothari",
+    "nbaschez", "suvonilc", "PaulYacoubian", "bbalfour", "deepakshenoy",
+    "neilpatel", "noahkagan", "blader", "rahulvohra", "stratechery",
+    "benthompson", "stevesi", "GrowthTactics", "carlvellotti",
+    "alexisxrivas", "JayaGup10", "mattmochary", "karunkaushik_",
+    "thisisgrantlee", "jjen_abel", "conradwa", "harrisonjohnson",
+    "GoodMarketingHQ", "CarrieRosePR", "copyhackers", "timsoulo",
+    "HubSpot", "ericries", "Charles_SEO", "rankmathseo"
+  ],
+  "Creators & Writers": [
+    "SahilBloom", "david_perell", "JamesClear", "dickiebush",
+    "shl", "shaneparrish", "danshipper", "every", "packyM",
+    "ByrneHobart", "dvassallo", "anafabrega11", "neuranne",
+    "polinapompliano", "Julian", "Nicolascole77", "evielync",
+    "Bazzaruto", "julia_saxena", "mrsharma", "RyanHoliday",
+    "gregisenberg", "ShaanVP", "thesamparr", "businessbarista",
+    "jspujji", "tobydoyhowell", "austin_rief", "APompliano",
+    "JoePompliano", "csallen", "joelgascoigne", "wes_kao",
+    "FarzaTV", "bhatiamanu", "chrishlad", "craigclemens",
+    "Codie_Sanchez", "thejustinwelsh", "NathanLands",
+    "ankurnagpal", "RomeenSheth", "TrevMcKendrick",
+    "AlexAndBooks_", "ash_lmb", "StephenKing", "AdamMGrant",
+    "ThisIsSethsBlog", "rorysutherland", "patio11",
+    "jackbutcher", "marcrandolph", "humansofny"
+  ],
+  "Design & UX": [
+    "mattpocockuk", "rogie", "LukeW", "doganuraldesign", "60fpsdesign",
+    "nlevin", "soleio", "erondu", "koenbok", "jmtrivedi",
+    "AdhamDannaway", "bnj", "brian_lovin", "jsngr", "Gavmn",
+    "mjboswell", "nateparrott", "jelleprins", "liuyuxxd",
+    "ingapng", "alexcornell", "benjitaylor"
+  ],
+  "Crypto & Web3": [
+    "VitalikButerin", "punk6529", "cdixon", "Cooopahtroopa",
+    "sid_coelho", "fractalwagmi", "balajis"
+  ],
+  "SaaS & Enterprise": [
+    "saastr", "jasonlk", "DanielleMorrill", "SaaStrAnnual",
+    "hnshah", "MarieProkopets", "bhalligan", "Techstars",
+    "AngelList", "IndieHackers", "christinacaci", "lizwessel",
+    "ClayHQ", "sytses", "SlackHQ", "NotionHQ", "SuperhumanMail",
+    "browsercompany", "stripe", "PayPal", "duolingo"
+  ],
+  "Media & News": [
+    "TechCrunch", "VentureBeat", "TheHackersNews", "newsycombinator",
+    "github", "freeCodeCamp", "MKBHD", "chandrarsrikant",
+    "nextbigwhat", "nixxin", "BDUTT", "lexfridman", "joerogan",
+    "mojostory", "spottedinprod", "imboringads"
+  ],
+  "Politics & Public Figures": [
+    "BarackObama", "POTUS44", "HillaryClinton", "realDonaldTrump",
+    "DOGE", "BillGates", "DalaiLama", "DrSJaishankar", "PMOIndia",
+    "mkstalin", "AtishiAAP", "TRBRajaa", "ptrmadurai", "KTRBRS",
+    "nikesharora", "TThenarasu", "arunjaitley", "hd_kumaraswamy",
+    "ShashiTharoor", "ProfFeynman", "EricRWeinstein"
+  ],
+  "Entertainment & Sports": [
+    "imVkohli", "akshaykumar", "BeingSalmanKhan", "deepikapadukone",
+    "iHrithik", "iamsrk", "SrBachchan", "sachin_rt", "virendersehwag",
+    "arrahman", "bhogleharsha", "RJ_Balaji", "chetan_bhagat",
+    "TheVijayMallya", "anandmahindra", "iKabirBedi", "krishashok"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "min_likes": 50,
+  "max_pages": 15,
+  "hours": 24,
+  "timeline_query_id": "YOUR_QUERY_ID_HERE"
+}

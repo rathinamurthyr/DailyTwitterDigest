@@ -1,0 +1,18 @@
+# Auth tokens - NEVER commit
+.tokens
+
+# Debug files (may contain personal data)
+debug_response.json
+debug_timeline.json
+debug_stderr.txt
+
+# Personal data
+twitter_following.txt
+digests/
+
+# Config with your query IDs
+config.json
+
+# Python
+__pycache__/
+*.pyc
