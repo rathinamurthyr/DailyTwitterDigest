@@ -11,10 +11,10 @@ Run the daily Twitter digest generator to fetch and categorize high-engagement t
 
 1. Find the project directory by looking for `daily_digest.py`:
    ```bash
-   find ~/Documents -name "daily_digest.py" -path "*/DailyTwitterDigest/*" 2>/dev/null | head -1
+   find ~ -maxdepth 5 -name "daily_digest.py" -path "*/DailyTwitterSummaryTool/*" 2>/dev/null | head -1
    ```
 
-2. Run the digest script from that directory:
+2. `cd` into that directory and run the script:
    ```bash
    python3 daily_digest.py
    ```
